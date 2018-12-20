@@ -9,6 +9,8 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 	int key;
 	enum Direction { DOWN, LEFT, UP, RIGHT }direction = DOWN;
 
+	int stage;
+
 
 	//DXライブラリの画面をウィンドウモードに
 	ChangeWindowMode(TRUE);
@@ -25,6 +27,9 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 	anim_run = MV1LoadModel("Player\\Anim_Run.mv1");
 	if (anim_run == -1)return -1;
 
+	stage = MV1LoadModel("map.mv1");
+	if (stage == -1)return -1;
+
 	//modelにanimを設定
 	attachidx = MV1AttachAnim(model1, 0, anim_nutral);
 	//idを元にアニメーションの総再生時間を取得
@@ -39,7 +44,7 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 	//ウラ画面表示に設定。描画対象をウラ画面に。screenFlip()で画面を切り替えないと表示されない
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	SetCameraPositionAndTargetAndUpVec(cpos, ctgt, VGet(0.0f, 0.0f, 1.0f));
+	//SetCameraPositionAndTargetAndUpVec(cpos, ctgt, VGet(0.0f, 0.0f, 1.0f));
 
 	//CheckHitKeyで押されているキーのチェック。esc押されたらループ終了
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
@@ -96,6 +101,9 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 		MV1SetRotationXYZ(model1, VGet(0.0f, 1.57f*direction, 0.0f));
 		MV1SetPosition(model1, pos);
 		MV1DrawModel(model1);
+
+		MV1SetPosition(stage, pos);
+		MV1DrawModel(stage);
 
 		//表画面とウラ画面の切り替え
 		ScreenFlip();
