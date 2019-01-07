@@ -27,7 +27,7 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 	anim_run = MV1LoadModel("Player\\Anim_Run.mv1");
 	if (anim_run == -1)return -1;
 
-	stage = MV1LoadModel("map.mv1");
+	stage = MV1LoadModel("Stage\\stagemap.mv1");
 	if (stage == -1)return -1;
 
 	//model‚Éanim‚ğİ’è
