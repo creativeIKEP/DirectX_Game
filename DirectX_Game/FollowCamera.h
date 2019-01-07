@@ -7,3 +7,5 @@ void MoveBack();
 void MoveRight();
 
 void MoveLeft();
+
+void RotateCamera();

@@ -22,4 +22,6 @@ void CheckKeyInput() {
 	if (key & PAD_INPUT_RIGHT) {
 		MoveRight();
 	}
+
+	RotateCamera();
 }
