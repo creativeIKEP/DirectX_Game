@@ -63,18 +63,21 @@ void EnemyUpdate() {
 	for (int i = 0; i < ENEMY_COUNT; i++) {
 		if (enemyType[i] == 0 && isAlive[i]) {
 			VECTOR sub = VSub(camePos, enemyPos[i]);
-			if (VSize(sub) <= 500) {
-				MATRIX rotationMatrix = MGetRotVec2(VGet(0, 0, -1), VNorm(sub));
-				VECTOR rot = VTransform(VGet(0, 0, -1), rotationMatrix);
-				rot.y = -rot.x*1.5f;
-				rot.x = 0;
-				rot.z = 0;
-				MV1SetRotationXYZ(enemyes[i],rot);
+			if (VSize(sub) <= 1000) {
+				VECTOR subnorm = VNorm(sub);
+				MATRIX matrix = MGetRotVec2(VGet(0, 0, -1), VGet(subnorm.x, 0, subnorm.z));
+				MV1SetRotationMatrix(enemyes[i], matrix);
 			}
 
 			DroneDraw((enemyes[i]), enemyPos[i]);
 		}
 		else if (enemyType[i] == 1 && isAlive[i]) {
+			VECTOR sub = VSub(camePos, enemyPos[i]);
+			if (VSize(sub) <= 1000) {
+				VECTOR subnorm = VNorm(sub);
+				MATRIX matrix = MGetRotVec2(VGet(-1, 0, 0), VGet(subnorm.x, 0, subnorm.z));
+				MV1SetRotationMatrix(enemyes[i], matrix);
+			}
 			RobotDraw((enemyes[i]), enemyPos[i]);
 		}
 	}
