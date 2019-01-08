@@ -2,12 +2,13 @@
 #include<random>
 #include "EnemyDrone.h"
 #include "EnemyRobot.h"
+#include "FollowCamera.h"
 
 #define ENEMY_COUNT 10
 
 int enemyes[ENEMY_COUNT];
 int enemyType[ENEMY_COUNT];
-float enemyCollisionRadius = 150.0f;
+float enemyCollisionRadius = 120.0f;
 bool isAlive[ENEMY_COUNT];
 VECTOR enemyPos[ENEMY_COUNT] = 
 {
@@ -39,6 +40,7 @@ bool EnemyInit() {
 		{
 			enemyes[i] = DroneInit();
 			enemyType[i] = 0;
+			enemyPos[i].y = 200;
 			//enemyPos[i] = VGet(rand() % 100, rand() % 100, rand() % 100);
 			if (enemyes[i] == -1)return false;
 			isAlive[i] = true;
@@ -46,6 +48,7 @@ bool EnemyInit() {
 		else {
 			enemyes[i] = RobotInit();
 			enemyType[i] = 1;
+			enemyPos[i].y = 50;
 			//enemyPos[i] = VGet(rand() % 100, rand() % 100, rand() % 100);
 			if (enemyes[i] == -1)return false;
 			isAlive[i] = true;
@@ -56,8 +59,19 @@ bool EnemyInit() {
 }
 
 void EnemyUpdate() {
+	VECTOR camePos = GetCameraPos();
 	for (int i = 0; i < ENEMY_COUNT; i++) {
 		if (enemyType[i] == 0 && isAlive[i]) {
+			VECTOR sub = VSub(camePos, enemyPos[i]);
+			if (VSize(sub) <= 500) {
+				MATRIX rotationMatrix = MGetRotVec2(VGet(0, 0, -1), VNorm(sub));
+				VECTOR rot = VTransform(VGet(0, 0, -1), rotationMatrix);
+				rot.y = -rot.x*1.5f;
+				rot.x = 0;
+				rot.z = 0;
+				MV1SetRotationXYZ(enemyes[i],rot);
+			}
+
 			DroneDraw((enemyes[i]), enemyPos[i]);
 		}
 		else if (enemyType[i] == 1 && isAlive[i]) {
