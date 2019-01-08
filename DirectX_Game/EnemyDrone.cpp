@@ -1,17 +1,12 @@
 #include <DxLib.h>
 
 
-int model;
-VECTOR pos;
-
-
 int DroneInit();
 void DroneDraw(int, VECTOR);
 
 
 int DroneInit() {
-	int model = MV1LoadModel("Enemy\\Drone\\drone.mv1");
-	return model;
+	return MV1LoadModel("Enemy\\Drone\\drone.mv1");
 }
 
 void DroneDraw(int model, VECTOR pos) {

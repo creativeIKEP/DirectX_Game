@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyDrone.cpp" />
+    <ClCompile Include="EnemyRobot.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -139,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyDrone.h" />
+    <ClInclude Include="EnemyRobot.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Player.h" />
