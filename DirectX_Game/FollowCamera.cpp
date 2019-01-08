@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include <math.h>
 #include "Stage.h"
+#include "Enemy.h"
 
 #define MPI  3.14159265358979323846
 
@@ -168,6 +169,18 @@ void CheckCollision() {
 		VECTOR subNorm = VNorm(sub);
 		subNorm.y = 0;
 		VECTOR moveVec = VScale(subNorm, abs((long)((cameraCollisionRadius-dis)*0.2f)));
+		cpos = VAdd(cpos, moveVec);
+		ctgt = VAdd(ctgt, moveVec);
+	}
+
+	int enemyModel = EnemyCheckHitSphere(cpos, cameraCollisionRadius);
+	if (enemyModel != -1) {
+		VECTOR nearPos = EnemyMostNearHitPos(cpos, cameraCollisionRadius, enemyModel);
+		VECTOR sub = VSub(cpos, nearPos);
+		float dis = VSize(sub);
+		VECTOR subNorm = VNorm(sub);
+		subNorm.y = 0;
+		VECTOR moveVec = VScale(subNorm, abs((long)((cameraCollisionRadius - dis)*0.2f)));
 		cpos = VAdd(cpos, moveVec);
 		ctgt = VAdd(ctgt, moveVec);
 	}
