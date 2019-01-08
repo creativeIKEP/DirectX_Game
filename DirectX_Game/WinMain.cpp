@@ -19,7 +19,7 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 
 		//write cutom update from here
 		MV1DrawModel(stage);
-		CheckKeyInput();
+		InputCheck();
 		SetCamera();
 		//end cutom update
 

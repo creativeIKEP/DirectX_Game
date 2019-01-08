@@ -1,1 +1,2 @@
-void CheckKeyInput();
+void InputCheck();
+void KeyInputCheck();

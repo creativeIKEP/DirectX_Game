@@ -10,6 +10,14 @@ int preMouseX, preMouseY;
 float rotateX_degree, rotateY_degree;
 
 
+void SetCamera();
+void MoveForward();
+void MoveBack();
+void MoveRight();
+void MoveLeft();
+void RotateCamera();
+
+
 void SetCamera() {
 	SetCameraPositionAndTargetAndUpVec(cpos, ctgt, VGet(0.0f, 1.0f, 0.0f));
 }
@@ -17,6 +25,7 @@ void SetCamera() {
 
 void MoveForward() {
 	VECTOR sub = VSub(cpos, ctgt);
+	sub.y = 0;
 	VECTOR cameraDirection = VNorm(sub);
 	ctgt.x -= cameraDirection.x*4.0f;
 	cpos.x -= cameraDirection.x*4.0f;
@@ -29,6 +38,7 @@ void MoveForward() {
 
 void MoveBack() {
 	VECTOR sub = VSub(cpos, ctgt);
+	sub.y = 0;
 	VECTOR cameraDirection = VNorm(sub);
 	ctgt.x += cameraDirection.x*4.0f;
 	cpos.x += cameraDirection.x*4.0f;
@@ -41,6 +51,7 @@ void MoveBack() {
 
 void MoveRight() {
 	VECTOR sub = VSub(cpos, ctgt);
+	sub.y = 0;
 	VECTOR cameraDirection = VNorm(sub);
 	ctgt.x -= cameraDirection.z*4.0f;
 	cpos.x -= cameraDirection.z*4.0f;
@@ -53,6 +64,7 @@ void MoveRight() {
 
 void MoveLeft() {
 	VECTOR sub = VSub(cpos, ctgt);
+	sub.y = 0;
 	VECTOR cameraDirection = VNorm(sub);
 	ctgt.x += cameraDirection.z*4.0f;
 	cpos.x += cameraDirection.z*4.0f;

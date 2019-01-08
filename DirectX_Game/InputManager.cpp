@@ -2,24 +2,25 @@
 #include "FollowCamera.h"
 
 
+void InputCheck();
+void KeyInputCheck();
+
 void InputCheck() {
-	
+	KeyInputCheck();
 }
 
 
-void CheckKeyInput() {
-	int key;
-	key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-	if (key & PAD_INPUT_DOWN) {
+void KeyInputCheck() {
+	if (CheckHitKey(KEY_INPUT_S)==1){
 		MoveBack();
 	}
-	if (key & PAD_INPUT_UP) {
+	if (CheckHitKey(KEY_INPUT_W) == 1) {
 		MoveForward();
 	}
-	if (key & PAD_INPUT_LEFT) {
+	if (CheckHitKey(KEY_INPUT_A) == 1) {
 		MoveLeft();
 	}
-	if (key & PAD_INPUT_RIGHT) {
+	if (CheckHitKey(KEY_INPUT_D) == 1) {
 		MoveRight();
 	}
 
