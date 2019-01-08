@@ -1,12 +1,15 @@
 #include <DxLib.h>
 #include "FollowCamera.h"
+#include "Player.h"
 
 
 void InputCheck();
 void KeyInputCheck();
+void MouseButtonInputCheck();
 
 void InputCheck() {
 	KeyInputCheck();
+	MouseButtonInputCheck();
 }
 
 
@@ -45,4 +48,11 @@ void KeyInputCheck() {
 	}
 
 	RotateCamera();
+}
+
+void MouseButtonInputCheck() {
+	int mouseClick = GetMouseInput();
+	if (mouseClick && MOUSE_INPUT_LEFT) {
+		PlayerShoot();
+	}
 }

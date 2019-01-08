@@ -25,6 +25,8 @@ void DashRight();
 void DashLeft();
 void RotateCamera();
 void CheckCollision();
+VECTOR GetCameraPos();
+VECTOR GetCameraDirection();
 
 
 void SetCamera() {
@@ -184,4 +186,11 @@ void CheckCollision() {
 		cpos = VAdd(cpos, moveVec);
 		ctgt = VAdd(ctgt, moveVec);
 	}
+}
+
+VECTOR GetCameraPos() {
+	return cpos;
+}
+VECTOR GetCameraDirection() {
+	return VNorm(VSub(ctgt, cpos));
 }

@@ -1,3 +1,6 @@
+#include <DxLib.h>
+
+
 void SetCamera();
 void MoveForward();
 void MoveBack();
@@ -9,3 +12,5 @@ void DashRight();
 void DashLeft();
 void RotateCamera();
 void CheckCollision();
+VECTOR GetCameraPos();
+VECTOR GetCameraDirection();

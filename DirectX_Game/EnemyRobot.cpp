@@ -11,6 +11,6 @@ int RobotInit() {
 
 void RobotDraw(int model, VECTOR pos) {
 	MV1SetPosition(model, pos);
-	MV1SetScale(model, VGet(10, 10, 10));
+	MV1SetScale(model, VGet(15, 15, 15));
 	MV1DrawModel(model);
 }
