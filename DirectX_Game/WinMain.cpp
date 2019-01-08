@@ -2,6 +2,8 @@
 #include "InputManager.h"
 #include "FollowCamera.h"
 #include "Stage.h"
+#include "Player.h"
+#include "Enemy.h"
 
 
 int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
@@ -14,6 +16,8 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 	if (!StageInitialize()) {
 		return -1;
 	}
+	PlayerInit();
+	if (!EnemyInit())return -1;
 	//end custom initialize
 	
 
@@ -25,6 +29,8 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 		StageDraw();
 		InputCheck();
 		SetCamera();
+		PlayerUpdate();
+		EnemyUpdate();
 		//end cutom update
 
 	

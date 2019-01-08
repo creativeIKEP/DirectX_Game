@@ -1,0 +1,2 @@
+bool EnemyInit();
+void EnemyUpdate();

@@ -1,0 +1,2 @@
+void PlayerUpdate();
+void PlayerInit();

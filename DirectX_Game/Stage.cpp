@@ -54,14 +54,6 @@ VECTOR MostNearHitPos(VECTOR centerPos, float radius) {
 		// “–‚½‚Á‚½ƒ|ƒŠƒSƒ“‚Ì”‚¾‚¯ŒJ‚è•Ô‚µ
 		for (int i = 0; i < HitPolyDim.HitNum; i++)
 		{
-			// “–‚½‚Á‚½ƒ|ƒŠƒSƒ“‚Ì”‚ğ•`‰æ
-			DrawFormatString(0, 0, GetColor(255, 255, 255), "Hit Poly Num   %d", HitPolyDim.HitNum);
-			// “–‚½‚Á‚½ƒ|ƒŠƒSƒ“‚ğ•`‰æ
-			DrawTriangle3D(
-				HitPolyDim.Dim[i].Position[0],
-				HitPolyDim.Dim[i].Position[1],
-				HitPolyDim.Dim[i].Position[2], GetColor(0, 255, 255), TRUE);
-
 			VECTOR sumVec = VAdd(VAdd(HitPolyDim.Dim[i].Position[0], HitPolyDim.Dim[i].Position[1]), HitPolyDim.Dim[i].Position[2]);
 			VECTOR centerVec = VGet(sumVec.x / 3, sumVec.y / 3, sumVec.z / 3);
 			if (i == 0)mostNearPos = centerVec;
