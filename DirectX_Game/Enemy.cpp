@@ -63,6 +63,17 @@ void EnemyUpdate() {
 	for (int i = 0; i < ENEMY_COUNT; i++) {
 		if (enemyType[i] == 0 && isAlive[i]) {
 			VECTOR sub = VSub(camePos, enemyPos[i]);
+			if (VSize(sub) <= 2000 && VSize(sub)>1000) {
+				VECTOR y0sub = sub;
+
+				y0sub.y = 0;
+				VECTOR y0subNorm = VNorm(y0sub);
+				enemyPos[i] = VAdd(enemyPos[i], VScale(y0subNorm, 5.0f));
+
+				VECTOR subnorm = VNorm(sub);
+				MATRIX matrix = MGetRotVec2(VGet(0, 0, -1), VGet(subnorm.x, 0, subnorm.z));
+				MV1SetRotationMatrix(enemyes[i], matrix);
+			}
 			if (VSize(sub) <= 1000) {
 				VECTOR subnorm = VNorm(sub);
 				MATRIX matrix = MGetRotVec2(VGet(0, 0, -1), VGet(subnorm.x, 0, subnorm.z));
@@ -73,11 +84,23 @@ void EnemyUpdate() {
 		}
 		else if (enemyType[i] == 1 && isAlive[i]) {
 			VECTOR sub = VSub(camePos, enemyPos[i]);
-			if (VSize(sub) <= 1000) {
+			if (VSize(sub) <= 2000 && VSize(sub)>1000) {
 				VECTOR subnorm = VNorm(sub);
+
+				VECTOR y0sub = sub;
+				y0sub.y = 0;
+				VECTOR y0subNorm = VNorm(y0sub);
+				enemyPos[i] = VAdd(enemyPos[i], VScale(y0subNorm, 5.0f));
+
 				MATRIX matrix = MGetRotVec2(VGet(-1, 0, 0), VGet(subnorm.x, 0, subnorm.z));
 				MV1SetRotationMatrix(enemyes[i], matrix);
 			}
+			if (VSize(sub) <= 1000) {
+				VECTOR subnorm = VNorm(sub);
+				MATRIX matrix = MGetRotVec2(VGet(0, 0, -1), VGet(subnorm.x, 0, subnorm.z));
+				MV1SetRotationMatrix(enemyes[i], matrix);
+			}
+
 			RobotDraw((enemyes[i]), enemyPos[i]);
 		}
 	}
