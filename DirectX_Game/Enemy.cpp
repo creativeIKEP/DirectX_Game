@@ -3,19 +3,21 @@
 #include "EnemyDrone.h"
 #include "EnemyRobot.h"
 #include "FollowCamera.h"
+#include "Stage.h"
+#include "Player.h"
 
 #define ENEMY_COUNT 10
 
 int enemyes[ENEMY_COUNT];
 int enemyType[ENEMY_COUNT];
-float enemyCollisionRadius = 120.0f;
+float enemyCollisionRadius = 80.0f;
 bool isAlive[ENEMY_COUNT];
 VECTOR enemyPos[ENEMY_COUNT] = 
 {
 	VGet(0.0f, 160.0f, 2381.3f),
 	VGet(2734.0f, 160.0f, 2766.57f),
 	VGet(1527.21f, 160.0f, 1575.2f),
-	VGet(1972.52f, 160.0f, -1594.85f),
+	VGet(1890.52f, 160.0f, -1566.85f),
 	VGet(4661.70f, 160.0f, -770.32f),
 	VGet(5090.91f, 160.0f, 2768.0f),
 	VGet(7487.0f, 160.0f, 36.39f),
@@ -23,6 +25,8 @@ VECTOR enemyPos[ENEMY_COUNT] =
 	VGet(7495.0f, 160.0f, 2811.47f),
 	VGet(7495.0f, 160.0f, 2811.47f),
 };
+
+int preAttackTime[ENEMY_COUNT];
 
 
 bool EnemyInit();
@@ -32,6 +36,7 @@ VECTOR EnemyMostNearHitPos(VECTOR, float, int);
 float GetEnemyCollisionRadius();
 VECTOR GetEnemyesPos(int);
 void SetDead(int);
+void EnemyCheckCollision(int);
 
 
 bool EnemyInit() {
@@ -53,6 +58,7 @@ bool EnemyInit() {
 			if (enemyes[i] == -1)return false;
 			isAlive[i] = true;
 		}
+		preAttackTime[i] = 0;
 	}
 
 	return true;
@@ -63,7 +69,7 @@ void EnemyUpdate() {
 	for (int i = 0; i < ENEMY_COUNT; i++) {
 		if (enemyType[i] == 0 && isAlive[i]) {
 			VECTOR sub = VSub(camePos, enemyPos[i]);
-			if (VSize(sub) <= 2000 && VSize(sub)>1000) {
+			if (VSize(sub) <= 1500 && VSize(sub)>1000) {
 				VECTOR y0sub = sub;
 
 				y0sub.y = 0;
@@ -78,13 +84,21 @@ void EnemyUpdate() {
 				VECTOR subnorm = VNorm(sub);
 				MATRIX matrix = MGetRotVec2(VGet(0, 0, -1), VGet(subnorm.x, 0, subnorm.z));
 				MV1SetRotationMatrix(enemyes[i], matrix);
+				if ((GetNowCount() - preAttackTime[i]) > 1000 * 3) {
+					preAttackTime[i] = GetNowCount();
+
+					//attack
+
+				}
 			}
+
+			EnemyCheckCollision(i);
 
 			DroneDraw((enemyes[i]), enemyPos[i]);
 		}
 		else if (enemyType[i] == 1 && isAlive[i]) {
 			VECTOR sub = VSub(camePos, enemyPos[i]);
-			if (VSize(sub) <= 2000 && VSize(sub)>1000) {
+			if (VSize(sub) <= 1500 && VSize(sub)>1000) {
 				VECTOR subnorm = VNorm(sub);
 
 				VECTOR y0sub = sub;
@@ -97,10 +111,17 @@ void EnemyUpdate() {
 			}
 			if (VSize(sub) <= 1000) {
 				VECTOR subnorm = VNorm(sub);
-				MATRIX matrix = MGetRotVec2(VGet(0, 0, -1), VGet(subnorm.x, 0, subnorm.z));
+				MATRIX matrix = MGetRotVec2(VGet(-1, 0, 0), VGet(subnorm.x, 0, subnorm.z));
 				MV1SetRotationMatrix(enemyes[i], matrix);
+				if ((GetNowCount() - preAttackTime[i]) > 1000 * 3) {
+					preAttackTime[i] = GetNowCount();
+
+					//attack
+
+				}
 			}
 
+			EnemyCheckCollision(i);
 			RobotDraw((enemyes[i]), enemyPos[i]);
 		}
 	}
@@ -134,4 +155,16 @@ VECTOR GetEnemyesPos(int index) {
 
 void SetDead(int index) {
 	isAlive[index] = false;
+}
+
+void EnemyCheckCollision(int index) {
+	if (CheckHitSphere(enemyPos[index], enemyCollisionRadius)) {
+		VECTOR nearPos = MostNearHitPos(enemyPos[index], enemyCollisionRadius);
+		VECTOR sub = VSub(enemyPos[index], nearPos);
+		float dis = VSize(sub);
+		VECTOR subNorm = VNorm(sub);
+		subNorm.y = 0;
+		VECTOR moveVec = VScale(subNorm, abs((long)((enemyCollisionRadius - dis)*0.2f)));
+		enemyPos[index] = VAdd(enemyPos[index], moveVec);
+	}
 }

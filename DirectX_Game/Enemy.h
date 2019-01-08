@@ -7,3 +7,4 @@ VECTOR EnemyMostNearHitPos(VECTOR, float, int);
 float GetEnemyCollisionRadius();
 VECTOR GetEnemyesPos(int);
 void SetDead(int);
+void EnemyCheckCollision(int);

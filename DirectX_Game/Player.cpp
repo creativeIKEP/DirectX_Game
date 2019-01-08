@@ -4,9 +4,12 @@
 #include "FollowCamera.h"
 
 
+int life = 10;
+
 void PlayerInit();
 void PlayerUpdate();
 void PlayerShoot();
+void PlayerLIfeDown();
 
 void PlayerInit() {
 	
@@ -41,4 +44,8 @@ void PlayerShoot() {
 	}
 
 
+}
+
+void PlayerLIfeDown() {
+	life--;
 }
