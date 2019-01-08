@@ -15,6 +15,10 @@ void MoveForward();
 void MoveBack();
 void MoveRight();
 void MoveLeft();
+void DashForward();
+void DashBack();
+void DashRight();
+void DashLeft();
 void RotateCamera();
 
 
@@ -72,6 +76,57 @@ void MoveLeft() {
 	cpos.y += cameraDirection.y*4.0f;
 	ctgt.z += -cameraDirection.x*4.0f;
 	cpos.z += -cameraDirection.x*4.0f;
+}
+
+void DashForward() {
+	VECTOR sub = VSub(cpos, ctgt);
+	sub.y = 0;
+	VECTOR cameraDirection = VNorm(sub);
+	ctgt.x -= cameraDirection.x*10.0f;
+	cpos.x -= cameraDirection.x*10.0f;
+	ctgt.y -= cameraDirection.y*10.0f;
+	cpos.y -= cameraDirection.y*10.0f;
+	ctgt.z -= cameraDirection.z*10.0f;
+	cpos.z -= cameraDirection.z*10.0f;
+}
+
+
+void DashBack() {
+	VECTOR sub = VSub(cpos, ctgt);
+	sub.y = 0;
+	VECTOR cameraDirection = VNorm(sub);
+	ctgt.x += cameraDirection.x*10.0f;
+	cpos.x += cameraDirection.x*10.0f;
+	ctgt.y += cameraDirection.y*10.0f;
+	cpos.y += cameraDirection.y*10.0f;
+	ctgt.z += cameraDirection.z*10.0f;
+	cpos.z += cameraDirection.z*10.0f;
+}
+
+
+void DashRight() {
+	VECTOR sub = VSub(cpos, ctgt);
+	sub.y = 0;
+	VECTOR cameraDirection = VNorm(sub);
+	ctgt.x -= cameraDirection.z*10.0f;
+	cpos.x -= cameraDirection.z*10.0f;
+	ctgt.y -= cameraDirection.y*10.0f;
+	cpos.y -= cameraDirection.y*10.0f;
+	ctgt.z -= -cameraDirection.x*10.0f;
+	cpos.z -= -cameraDirection.x*10.0f;
+}
+
+
+void DashLeft() {
+	VECTOR sub = VSub(cpos, ctgt);
+	sub.y = 0;
+	VECTOR cameraDirection = VNorm(sub);
+	ctgt.x += cameraDirection.z*10.0f;
+	cpos.x += cameraDirection.z*10.0f;
+	ctgt.y += cameraDirection.y*10.0f;
+	cpos.y += cameraDirection.y*10.0f;
+	ctgt.z += -cameraDirection.x*10.0f;
+	cpos.z += -cameraDirection.x*10.0f;
 }
 
 void RotateCamera() {
