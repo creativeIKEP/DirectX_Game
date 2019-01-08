@@ -79,16 +79,16 @@ void RotateCamera() {
 	GetMousePoint(&mouseX, &mouseY);
 	GetWindowSize(&windowWidth, &windowHeight);
 	float deltaRotateX_degree = (float)(mouseX - preMouseX) * 360 / windowWidth;
-	//float deltaRotateY_degree = (float)(mouseY - preMouseY) * 360 / windowHeight;
+	float deltaRotateY_degree = (float)(mouseY - preMouseY) * 360 / windowHeight;
 	rotateX_degree -= deltaRotateX_degree;
-	//rotateY_degree -= deltaRotateY_degree;
-	//if (rotateY_degree >= 60)rotateY_degree = 60;
-	//if (rotateY_degree < -30)rotateY_degree = -30;
+	rotateY_degree -= deltaRotateY_degree;
+	if (rotateY_degree >= 60)rotateY_degree = 60;
+	if (rotateY_degree < -30)rotateY_degree = -30;
 
 	cpos.x = ctgt.x + 100 * cos(MPI*rotateX_degree / 180);
 	cpos.z = ctgt.z + 100 * sin(MPI*rotateX_degree / 180);
-	//ctgt.y = 100 * tan(MPI*rotateY_degree / 180);
+	ctgt.y = 100 * tan(MPI*rotateY_degree / 180);
 	
 	preMouseX = mouseX;
-	//preMouseY = mouseY;
+	preMouseY = mouseY;
 }
