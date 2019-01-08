@@ -8,3 +8,4 @@ void DashBack();
 void DashRight();
 void DashLeft();
 void RotateCamera();
+void CheckCollision();

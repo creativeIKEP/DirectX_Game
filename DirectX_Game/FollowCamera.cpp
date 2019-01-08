@@ -1,11 +1,14 @@
 #include <DxLib.h>
 #include <math.h>
+#include "Stage.h"
 
 #define MPI  3.14159265358979323846
 
 
 
-VECTOR cpos = VGet(-600.0f, 100.0f, 0.0f), ctgt = VGet(-500.0f, 100.0f, 0.0f);
+VECTOR cpos = VGet(-600.0f, 150.0f, 0.0f), ctgt = VGet(-500.0f, 150.0f, 0.0f);
+float cameraCollisionRadius = 150.0f;
+
 int preMouseX, preMouseY;
 float rotateX_degree, rotateY_degree;
 
@@ -20,6 +23,7 @@ void DashBack();
 void DashRight();
 void DashLeft();
 void RotateCamera();
+void CheckCollision();
 
 
 void SetCamera() {
@@ -37,6 +41,7 @@ void MoveForward() {
 	cpos.y -= cameraDirection.y*4.0f;
 	ctgt.z -= cameraDirection.z*4.0f;
 	cpos.z -= cameraDirection.z*4.0f;
+	CheckCollision();
 }
 
 
@@ -50,6 +55,7 @@ void MoveBack() {
 	cpos.y += cameraDirection.y*4.0f;
 	ctgt.z += cameraDirection.z*4.0f;
 	cpos.z += cameraDirection.z*4.0f;
+	CheckCollision();
 }
 
 
@@ -63,6 +69,7 @@ void MoveRight() {
 	cpos.y -= cameraDirection.y*4.0f;
 	ctgt.z -= -cameraDirection.x*4.0f;
 	cpos.z -= -cameraDirection.x*4.0f;
+	CheckCollision();
 }
 
 
@@ -76,6 +83,7 @@ void MoveLeft() {
 	cpos.y += cameraDirection.y*4.0f;
 	ctgt.z += -cameraDirection.x*4.0f;
 	cpos.z += -cameraDirection.x*4.0f;
+	CheckCollision();
 }
 
 void DashForward() {
@@ -88,6 +96,7 @@ void DashForward() {
 	cpos.y -= cameraDirection.y*10.0f;
 	ctgt.z -= cameraDirection.z*10.0f;
 	cpos.z -= cameraDirection.z*10.0f;
+	CheckCollision();
 }
 
 
@@ -101,6 +110,7 @@ void DashBack() {
 	cpos.y += cameraDirection.y*10.0f;
 	ctgt.z += cameraDirection.z*10.0f;
 	cpos.z += cameraDirection.z*10.0f;
+	CheckCollision();
 }
 
 
@@ -114,6 +124,7 @@ void DashRight() {
 	cpos.y -= cameraDirection.y*10.0f;
 	ctgt.z -= -cameraDirection.x*10.0f;
 	cpos.z -= -cameraDirection.x*10.0f;
+	CheckCollision();
 }
 
 
@@ -127,6 +138,7 @@ void DashLeft() {
 	cpos.y += cameraDirection.y*10.0f;
 	ctgt.z += -cameraDirection.x*10.0f;
 	cpos.z += -cameraDirection.x*10.0f;
+	CheckCollision();
 }
 
 void RotateCamera() {
@@ -146,4 +158,17 @@ void RotateCamera() {
 	
 	preMouseX = mouseX;
 	preMouseY = mouseY;
+}
+
+void CheckCollision() {
+	if (CheckHitSphere(cpos, cameraCollisionRadius)) {
+		VECTOR nearPos = MostNearHitPos(cpos, cameraCollisionRadius);
+		VECTOR sub = VSub(cpos, nearPos);
+		float dis = VSize(sub);
+		VECTOR subNorm = VNorm(sub);
+		subNorm.y = 0;
+		VECTOR moveVec = VScale(subNorm, abs((long)((cameraCollisionRadius-dis)*0.2f)));
+		cpos = VAdd(cpos, moveVec);
+		ctgt = VAdd(ctgt, moveVec);
+	}
 }

@@ -130,11 +130,13 @@
   <ItemGroup>
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Stage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
