@@ -8,6 +8,7 @@
 int life = 10;
 int preHitTime = 0;
 int heart;
+int gameover;
 
 void PlayerInit();
 void PlayerUpdate();
@@ -16,6 +17,7 @@ void PlayerLIfeDown();
 
 void PlayerInit() {
 	heart = LoadGraph("heart.png");
+	gameover = LoadGraph("gameover.png");
 }
 
 void PlayerUpdate() {
@@ -25,8 +27,14 @@ void PlayerUpdate() {
 
 	ShootEffect();
 
-	for (int i = 0; i < life; i++) {
-		DrawExtendGraph(i * 60, 30, i * 60 + 50, 50, heart, TRUE);
+	if (life <= 0) {
+		DrawExtendGraph(0, windowHeight/2 - 55, windowWidth, windowHeight / 2 - 55 + 200, gameover, TRUE);
+	}
+
+	else {
+		for (int i = 0; i < life; i++) {
+			DrawExtendGraph(i * 60, 30, i * 60 + 50, 50, heart, TRUE);
+		}
 	}
 }
 

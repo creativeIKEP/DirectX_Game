@@ -87,7 +87,7 @@ void EnemyUpdate() {
 			if (VSize(sub) <= 1000) {
 				VECTOR subnorm = VNorm(sub);
 				MATRIX matrix = MGetRotVec2(VGet(0, 0, -1), VGet(subnorm.x, 0, subnorm.z));
-				if ((GetNowCount() - preAttackTime[i]) > 1000 * 3) {
+				if ((GetNowCount() - preAttackTime[i]) > 1000 * 1) {
 					if ((GetNowCount() - preAttackTime[i]) < 1000 * (3+1)) {
 						MV1SetRotationMatrix(enemyes[i], matrix);
 						AttackDirectionMatrix[i] = matrix;
@@ -129,7 +129,7 @@ void EnemyUpdate() {
 			if (VSize(sub) <= 1000) {
 				VECTOR subnorm = VNorm(sub);
 				MATRIX matrix = MGetRotVec2(VGet(-1, 0, 0), VGet(subnorm.x, 0, subnorm.z));
-				if ((GetNowCount() - preAttackTime[i]) > 1000 * 3) {
+				if ((GetNowCount() - preAttackTime[i]) > 1000 * 1) {
 					if ((GetNowCount() - preAttackTime[i]) < 1000 * (3 + 1)) {
 						MV1SetRotationMatrix(enemyes[i], matrix);
 						AttackDirectionMatrix[i] = matrix;
