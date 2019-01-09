@@ -21,9 +21,9 @@ bool StageInitialize() {
 }
 
 int StageLoad() {
-	stage = MV1LoadModel("Stage\\map.mv1");
+	stage = MV1LoadModel("Stage\\stagemap.mv1");
 	if (stage == -1)return -1;
-	collision = MV1LoadModel("Stage\\map.mv1");
+	collision = MV1LoadModel("Stage\\stagemap.mv1");
 	if (collision == -1)return -1;
 
 	if (MV1SetupCollInfo(collision, -1, 8, 8, 8) == -1)return -1;
