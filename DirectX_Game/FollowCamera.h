@@ -14,3 +14,4 @@ void RotateCamera();
 void CheckCollision();
 VECTOR GetCameraPos();
 VECTOR GetCameraDirection();
+float GetCameraCollisionRadius();

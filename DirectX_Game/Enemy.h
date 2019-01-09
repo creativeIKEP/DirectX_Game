@@ -8,3 +8,4 @@ float GetEnemyCollisionRadius();
 VECTOR GetEnemyesPos(int);
 void SetDead(int);
 void EnemyCheckCollision(int);
+void HitCheck(VECTOR, VECTOR);

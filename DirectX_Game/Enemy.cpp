@@ -40,6 +40,7 @@ float GetEnemyCollisionRadius();
 VECTOR GetEnemyesPos(int);
 void SetDead(int);
 void EnemyCheckCollision(int);
+void HitCheck(VECTOR, VECTOR);
 
 
 bool EnemyInit() {
@@ -95,6 +96,8 @@ void EnemyUpdate() {
 					else if((GetNowCount() - preAttackTime[i]) < 1000 * (3 + 3)){
 						VECTOR direction = VTransform(VGet(0, -0.2f, -1), AttackDirectionMatrix[i]);
 						ShootEffectSet(VAdd(enemyPos[i], VScale(direction, 200)));
+						HitCheck(enemyPos[i], VNorm(direction));
+						ShootEffect();
 					}
 					else if ((GetNowCount() - preAttackTime[i]) >= 1000 * (3 + 3)) {
 						MV1SetRotationMatrix(enemyes[i], matrix);
@@ -135,6 +138,8 @@ void EnemyUpdate() {
 					else if ((GetNowCount() - preAttackTime[i]) < 1000 * (3 + 3)) {
 						VECTOR direction = VTransform(VGet(-1, 1, -1), AttackDirectionMatrix[i]);
 						ShootEffectSet(VAdd(enemyPos[i], VScale(direction, 80)));
+						HitCheck(enemyPos[i], VNorm(direction));
+						ShootEffect();
 					}
 					else if ((GetNowCount() - preAttackTime[i]) >= 1000 * (3 + 3)) {
 						MV1SetRotationMatrix(enemyes[i], matrix);
@@ -192,5 +197,24 @@ void EnemyCheckCollision(int index) {
 		subNorm.y = 0;
 		VECTOR moveVec = VScale(subNorm, abs((long)((enemyCollisionRadius - dis)*0.2f)));
 		enemyPos[index] = VAdd(enemyPos[index], moveVec);
+	}
+}
+
+void HitCheck(VECTOR enemypos, VECTOR enemyDirection) {
+	VECTOR cameraPos = GetCameraPos();
+	float playerRadius = GetCameraCollisionRadius();
+
+	float distance = VSize(VSub(enemypos, cameraPos));
+	float maxAngle_rad = asinf(playerRadius / distance);
+
+	float dot = VDot(enemyDirection, VSub(cameraPos, enemypos));
+	float cosValue = dot / (distance*VSize(enemyDirection));
+	float angle_rad = acosf(cosValue);
+
+	if (angle_rad <= maxAngle_rad) {
+		//player hit!
+		printfDx("hit ");
+
+		return;
 	}
 }
