@@ -5,12 +5,14 @@
 #include "FollowCamera.h"
 #include "Stage.h"
 #include "Player.h"
+#include "ShootEffect.h"
+
 
 #define ENEMY_COUNT 10
 
 int enemyes[ENEMY_COUNT];
 int enemyType[ENEMY_COUNT];
-float enemyCollisionRadius = 80.0f;
+float enemyCollisionRadius = 50.0f;
 bool isAlive[ENEMY_COUNT];
 VECTOR enemyPos[ENEMY_COUNT] = 
 {
@@ -27,6 +29,7 @@ VECTOR enemyPos[ENEMY_COUNT] =
 };
 
 int preAttackTime[ENEMY_COUNT];
+MATRIX AttackDirectionMatrix[ENEMY_COUNT];
 
 
 bool EnemyInit();
@@ -84,28 +87,22 @@ void EnemyUpdate() {
 				VECTOR subnorm = VNorm(sub);
 				MATRIX matrix = MGetRotVec2(VGet(0, 0, -1), VGet(subnorm.x, 0, subnorm.z));
 				if ((GetNowCount() - preAttackTime[i]) > 1000 * 3) {
-					//preAttackTime[i] = GetNowCount();
-
-					/*
 					if ((GetNowCount() - preAttackTime[i]) < 1000 * (3+1)) {
 						MV1SetRotationMatrix(enemyes[i], matrix);
-						//DrawLine3D(enemyPos[i], GetCameraPos(), GetColor(255, 0, 0), 10);
-						//DrawCapsule3D(enemyPos[i], GetCameraPos(), 10, 8, GetColor(255, 0, 0), GetColor(255, 0, 0), TRUE);
-						DrawRotaGraph3D(enemyPos[i].x, enemyPos[i].y, enemyPos[i].z, 10000000, 0, effect, TRUE);
+						AttackDirectionMatrix[i] = matrix;
+						
 					}
 					else if((GetNowCount() - preAttackTime[i]) < 1000 * (3 + 3)){
-						//DrawLine3D(enemyPos[i], GetCameraPos(), GetColor(0, 0, 255));
-						//DrawCapsule3D(enemyPos[i], GetCameraPos(), 10, 8, GetColor(0, 0, 255), GetColor(0, 0, 255), TRUE);
-						DrawRotaGraph3D(enemyPos[i].x, enemyPos[i].y, enemyPos[i].z, 10000000, 0, effect, TRUE);
+						VECTOR direction = VTransform(VGet(0, -0.2f, -1), AttackDirectionMatrix[i]);
+						ShootEffectSet(VAdd(enemyPos[i], VScale(direction, 200)));
 					}
 					else if ((GetNowCount() - preAttackTime[i]) >= 1000 * (3 + 3)) {
 						MV1SetRotationMatrix(enemyes[i], matrix);
 						preAttackTime[i] = GetNowCount();
 					}
-					*/
-
-					//attack
-					//DrawLine3D(enemyPos[i], VGet(subnorm.x, 0, subnorm.z), GetColor(255, 0, 0));
+				}
+				else {
+					MV1SetRotationMatrix(enemyes[i], matrix);
 				}
 			}
 
@@ -129,18 +126,30 @@ void EnemyUpdate() {
 			if (VSize(sub) <= 1000) {
 				VECTOR subnorm = VNorm(sub);
 				MATRIX matrix = MGetRotVec2(VGet(-1, 0, 0), VGet(subnorm.x, 0, subnorm.z));
-				MV1SetRotationMatrix(enemyes[i], matrix);
 				if ((GetNowCount() - preAttackTime[i]) > 1000 * 3) {
-					preAttackTime[i] = GetNowCount();
+					if ((GetNowCount() - preAttackTime[i]) < 1000 * (3 + 1)) {
+						MV1SetRotationMatrix(enemyes[i], matrix);
+						AttackDirectionMatrix[i] = matrix;
 
-					//attack
-
+					}
+					else if ((GetNowCount() - preAttackTime[i]) < 1000 * (3 + 3)) {
+						VECTOR direction = VTransform(VGet(-1, 1, -1), AttackDirectionMatrix[i]);
+						ShootEffectSet(VAdd(enemyPos[i], VScale(direction, 80)));
+					}
+					else if ((GetNowCount() - preAttackTime[i]) >= 1000 * (3 + 3)) {
+						MV1SetRotationMatrix(enemyes[i], matrix);
+						preAttackTime[i] = GetNowCount();
+					}
+				}
+				else {
+					MV1SetRotationMatrix(enemyes[i], matrix);
 				}
 			}
 
 			EnemyCheckCollision(i);
 			RobotDraw((enemyes[i]), enemyPos[i]);
 		}
+		ShootEffect();
 	}
 }
 

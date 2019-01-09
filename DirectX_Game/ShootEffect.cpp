@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include <queue>
 
 int shootEffect;
 int shootStartTime = -1;
