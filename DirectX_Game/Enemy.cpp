@@ -213,7 +213,7 @@ void HitCheck(VECTOR enemypos, VECTOR enemyDirection) {
 
 	if (angle_rad <= maxAngle_rad) {
 		//player hit!
-		printfDx("hit ");
+		PlayerLIfeDown();
 
 		return;
 	}

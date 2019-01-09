@@ -6,6 +6,8 @@
 
 
 int life = 10;
+int preHitTime = 0;
+int heart;
 
 void PlayerInit();
 void PlayerUpdate();
@@ -13,7 +15,7 @@ void PlayerShoot();
 void PlayerLIfeDown();
 
 void PlayerInit() {
-	
+	heart = LoadGraph("heart.png");
 }
 
 void PlayerUpdate() {
@@ -22,6 +24,10 @@ void PlayerUpdate() {
 	DrawString(windowWidth / 2, windowHeight / 2, "+", GetColor(0, 0, 0));
 
 	ShootEffect();
+
+	for (int i = 0; i < life; i++) {
+		DrawExtendGraph(i * 60, 30, i * 60 + 50, 50, heart, TRUE);
+	}
 }
 
 void PlayerShoot() {
@@ -53,5 +59,8 @@ void PlayerShoot() {
 }
 
 void PlayerLIfeDown() {
-	life--;
+	if ((GetNowCount() - preHitTime) > 1000 * 3.0f) {
+		preHitTime = GetNowCount();
+		life--;
+	}
 }

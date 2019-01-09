@@ -32,8 +32,8 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 		StageDraw();
 		InputCheck();
 		SetCamera();
-		PlayerUpdate();
 		EnemyUpdate();
+		PlayerUpdate();
 		//end cutom update
 
 	
