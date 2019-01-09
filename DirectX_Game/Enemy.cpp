@@ -30,6 +30,9 @@ VECTOR enemyPos[ENEMY_COUNT] =
 
 int preAttackTime[ENEMY_COUNT];
 MATRIX AttackDirectionMatrix[ENEMY_COUNT];
+int explosinoEffect;
+VECTOR explosionPos[ENEMY_COUNT];
+int explosionTime[ENEMY_COUNT];
 
 
 bool EnemyInit();
@@ -64,6 +67,8 @@ bool EnemyInit() {
 		}
 		preAttackTime[i] = 0;
 	}
+
+	explosinoEffect = LoadGraph("explosion.png");
 
 	return true;
 }
@@ -155,6 +160,14 @@ void EnemyUpdate() {
 			RobotDraw((enemyes[i]), enemyPos[i]);
 		}
 		ShootEffect();
+
+		int explosionDeltaTime = GetNowCount() - explosionTime[i];
+		if (explosionTime[i] != 0 && explosionDeltaTime<=0.25f*1000) {
+			double rate = explosionDeltaTime / (0.25f * 1000);
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (int)255*rate);
+			DrawExtendGraph3D(explosionPos[i].x, explosionPos[i].y, explosionPos[i].z, rate, rate, explosinoEffect, TRUE);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		}
 	}
 }
 
@@ -186,6 +199,8 @@ VECTOR GetEnemyesPos(int index) {
 
 void SetDead(int index) {
 	isAlive[index] = false;
+	explosionPos[index] = enemyPos[index];
+	explosionTime[index] = GetNowCount();
 }
 
 void EnemyCheckCollision(int index) {
