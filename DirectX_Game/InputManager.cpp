@@ -3,6 +3,8 @@
 #include "Player.h"
 
 
+bool isClick = false;
+
 void InputCheck();
 void KeyInputCheck();
 void MouseButtonInputCheck();
@@ -52,7 +54,11 @@ void KeyInputCheck() {
 
 void MouseButtonInputCheck() {
 	int mouseClick = GetMouseInput();
-	if (mouseClick && MOUSE_INPUT_LEFT) {
+	if (mouseClick && MOUSE_INPUT_LEFT && !isClick) {
 		PlayerShoot();
+		isClick = true;
+	}
+	else if(!(mouseClick && MOUSE_INPUT_LEFT)){
+		isClick = false;
 	}
 }

@@ -5,7 +5,7 @@
 #include "ShootEffect.h"
 
 
-int life = 10;
+int life = 3;
 int preHitTime = 0;
 int heart;
 int gameover;

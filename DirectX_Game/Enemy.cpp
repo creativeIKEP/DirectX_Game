@@ -12,7 +12,7 @@
 
 int enemyes[ENEMY_COUNT];
 int enemyType[ENEMY_COUNT];
-float enemyCollisionRadius = 50.0f;
+float enemyCollisionRadius = 80.0f;
 bool isAlive[ENEMY_COUNT];
 VECTOR enemyPos[ENEMY_COUNT] = 
 {
@@ -33,6 +33,7 @@ MATRIX AttackDirectionMatrix[ENEMY_COUNT];
 int explosinoEffect;
 VECTOR explosionPos[ENEMY_COUNT];
 int explosionTime[ENEMY_COUNT];
+int clear;
 
 
 bool EnemyInit();
@@ -69,6 +70,7 @@ bool EnemyInit() {
 	}
 
 	explosinoEffect = LoadGraph("explosion.png");
+	clear = LoadGraph("clear.png");
 
 	return true;
 }
@@ -169,6 +171,15 @@ void EnemyUpdate() {
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
 	}
+
+	int windowWidth, windowHeight;
+	GetWindowSize(&windowWidth, &windowHeight);
+	for (int i = 0; i < ENEMY_COUNT; i++) {
+		if (isAlive[i]) {
+			return;
+		}
+	}
+	DrawExtendGraph(0, 0, windowWidth, windowHeight, clear, TRUE);
 }
 
 
