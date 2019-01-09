@@ -34,6 +34,7 @@ int explosinoEffect;
 VECTOR explosionPos[ENEMY_COUNT];
 int explosionTime[ENEMY_COUNT];
 int clear;
+int deadNum = 0;
 
 
 bool EnemyInit();
@@ -174,6 +175,8 @@ void EnemyUpdate() {
 
 	int windowWidth, windowHeight;
 	GetWindowSize(&windowWidth, &windowHeight);
+	DrawFormatString(windowWidth - 300, 50, GetColor(0, 0, 0), "ì|ÇµÇΩêî:%d/%d", deadNum, ENEMY_COUNT);
+
 	for (int i = 0; i < ENEMY_COUNT; i++) {
 		if (isAlive[i]) {
 			return;
@@ -212,6 +215,8 @@ void SetDead(int index) {
 	isAlive[index] = false;
 	explosionPos[index] = enemyPos[index];
 	explosionTime[index] = GetNowCount();
+	deadNum++;
+	if (deadNum > ENEMY_COUNT)deadNum = ENEMY_COUNT;
 }
 
 void EnemyCheckCollision(int index) {

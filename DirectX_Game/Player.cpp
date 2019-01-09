@@ -5,10 +5,11 @@
 #include "ShootEffect.h"
 
 
-int life = 3;
+int life = 5;
 int preHitTime = 0;
 int heart;
 int gameover;
+int damage;
 
 void PlayerInit();
 void PlayerUpdate();
@@ -18,6 +19,7 @@ void PlayerLIfeDown();
 void PlayerInit() {
 	heart = LoadGraph("heart.png");
 	gameover = LoadGraph("gameover.png");
+	damage = LoadGraph("damage.png");
 }
 
 void PlayerUpdate() {
@@ -28,7 +30,7 @@ void PlayerUpdate() {
 	ShootEffect();
 
 	if (life <= 0) {
-		DrawExtendGraph(0, windowHeight/2 - 55, windowWidth, windowHeight / 2 - 55 + 200, gameover, TRUE);
+		DrawExtendGraph(0, windowHeight/2 - 55, windowWidth, windowHeight / 2 - 55 + 250, gameover, TRUE);
 	}
 
 	else {
@@ -67,8 +69,17 @@ void PlayerShoot() {
 }
 
 void PlayerLIfeDown() {
+	float deltaTime = GetNowCount() - preHitTime;
 	if ((GetNowCount() - preHitTime) > 1000 * 3.0f) {
 		preHitTime = GetNowCount();
 		life--;
+	}
+	else {
+		int windowWidth, windowHeight;
+		GetWindowSize(&windowWidth, &windowHeight);
+		double rate = deltaTime / (3.0f * 1000);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (int)255 * rate);
+		DrawExtendGraph(0, 0, windowWidth, windowHeight, damage, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 }
