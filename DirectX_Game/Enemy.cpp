@@ -212,11 +212,11 @@ VECTOR GetEnemyesPos(int index) {
 }
 
 void SetDead(int index) {
-	isAlive[index] = false;
 	explosionPos[index] = enemyPos[index];
-	explosionTime[index] = GetNowCount();
-	deadNum++;
+	if(isAlive[index])explosionTime[index] = GetNowCount();
+	if(isAlive[index])deadNum++;
 	if (deadNum > ENEMY_COUNT)deadNum = ENEMY_COUNT;
+	isAlive[index] = false;
 }
 
 void EnemyCheckCollision(int index) {
