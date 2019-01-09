@@ -128,22 +128,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EffectDeath.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyDrone.cpp" />
     <ClCompile Include="EnemyRobot.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ShootEffect.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EffectDeath.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyDrone.h" />
     <ClInclude Include="EnemyRobot.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="ShootEffect.h" />
     <ClInclude Include="Stage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -4,6 +4,7 @@
 #include "Stage.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "ShootEffect.h"
 
 
 int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
@@ -18,6 +19,8 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 	}
 	PlayerInit();
 	if (!EnemyInit())return -1;
+
+	ShootEffectInit();
 	//end custom initialize
 	
 

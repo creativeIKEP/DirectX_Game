@@ -2,6 +2,7 @@
 #include <math.h>
 #include "Enemy.h"
 #include "FollowCamera.h"
+#include "ShootEffect.h"
 
 
 int life = 10;
@@ -19,6 +20,8 @@ void PlayerUpdate() {
 	int windowWidth, windowHeight;
 	GetWindowSize(&windowWidth, &windowHeight);
 	DrawString(windowWidth / 2, windowHeight / 2, "+", GetColor(0, 0, 0));
+
+	ShootEffect();
 }
 
 void PlayerShoot() {
@@ -26,6 +29,9 @@ void PlayerShoot() {
 	VECTOR cameraPos = GetCameraPos();
 	VECTOR cameraDirection = GetCameraDirection();
 	float enemyRadius = GetEnemyCollisionRadius();
+
+	ShootEffectSet(VAdd(cameraPos, VScale(GetCameraDirection(), 100)));
+
 	for (int i = 0; i < 10; i++) {
 		VECTOR enePos = GetEnemyesPos(i);
 		float distance = VSize(VSub(enePos, cameraPos));

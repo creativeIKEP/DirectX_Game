@@ -83,12 +83,29 @@ void EnemyUpdate() {
 			if (VSize(sub) <= 1000) {
 				VECTOR subnorm = VNorm(sub);
 				MATRIX matrix = MGetRotVec2(VGet(0, 0, -1), VGet(subnorm.x, 0, subnorm.z));
-				MV1SetRotationMatrix(enemyes[i], matrix);
 				if ((GetNowCount() - preAttackTime[i]) > 1000 * 3) {
-					preAttackTime[i] = GetNowCount();
+					//preAttackTime[i] = GetNowCount();
+
+					/*
+					if ((GetNowCount() - preAttackTime[i]) < 1000 * (3+1)) {
+						MV1SetRotationMatrix(enemyes[i], matrix);
+						//DrawLine3D(enemyPos[i], GetCameraPos(), GetColor(255, 0, 0), 10);
+						//DrawCapsule3D(enemyPos[i], GetCameraPos(), 10, 8, GetColor(255, 0, 0), GetColor(255, 0, 0), TRUE);
+						DrawRotaGraph3D(enemyPos[i].x, enemyPos[i].y, enemyPos[i].z, 10000000, 0, effect, TRUE);
+					}
+					else if((GetNowCount() - preAttackTime[i]) < 1000 * (3 + 3)){
+						//DrawLine3D(enemyPos[i], GetCameraPos(), GetColor(0, 0, 255));
+						//DrawCapsule3D(enemyPos[i], GetCameraPos(), 10, 8, GetColor(0, 0, 255), GetColor(0, 0, 255), TRUE);
+						DrawRotaGraph3D(enemyPos[i].x, enemyPos[i].y, enemyPos[i].z, 10000000, 0, effect, TRUE);
+					}
+					else if ((GetNowCount() - preAttackTime[i]) >= 1000 * (3 + 3)) {
+						MV1SetRotationMatrix(enemyes[i], matrix);
+						preAttackTime[i] = GetNowCount();
+					}
+					*/
 
 					//attack
-
+					//DrawLine3D(enemyPos[i], VGet(subnorm.x, 0, subnorm.z), GetColor(255, 0, 0));
 				}
 			}
 
