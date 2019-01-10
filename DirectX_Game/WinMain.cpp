@@ -8,12 +8,17 @@
 
 
 int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
+	int title;
+	bool isStart = false;
+
 	ChangeWindowMode(TRUE);
 	SetGraphMode(1200, 800, 32);
 	if (DxLib_Init() == -1) return -1;
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	//write custom initialize from here
+	title = LoadGraph("title.png");
+
 	if (!StageInitialize()) {
 		return -1;
 	}
@@ -29,11 +34,38 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 		
 
 		//write cutom update from here
-		StageDraw();
-		InputCheck();
-		SetCamera();
-		EnemyUpdate();
-		PlayerUpdate();
+		if (isStart) {
+			StageDraw();
+			InputCheck();
+			SetCamera();
+			EnemyUpdate();
+			PlayerUpdate();
+		}
+
+		else {
+			int windowWidth, windowHeight;
+			GetWindowSize(&windowWidth, &windowHeight);
+			DrawExtendGraph(0, 0, windowWidth, windowHeight, title, FALSE);
+			SetFontSize(50);
+
+			int xpos, ypos;
+			GetMousePoint(&xpos, &ypos);
+			if (windowWidth / 2 - 30 <= xpos && xpos <= windowWidth / 2 - 30 + 140 && windowHeight - 80 <= ypos && ypos <= windowHeight - 80 + 50) {
+				DrawString(windowWidth / 2 - 30, windowHeight - 80, "START", GetColor(255, 0, 0));
+			}
+			else{ DrawString(windowWidth / 2 - 30, windowHeight - 80, "START", GetColor(255, 255, 255)); }
+
+
+			int mouseClick = GetMouseInput();
+			if (mouseClick && MOUSE_INPUT_LEFT) {
+				int xpos, ypos;
+				GetMousePoint(&xpos, &ypos);
+				if (windowWidth / 2 - 30 <= xpos && xpos <= windowWidth / 2 - 30 + 140 && windowHeight - 80 <= ypos && ypos <= windowHeight - 80 + 50) {
+					isStart = true;
+				}
+			}
+			SetFontSize(-1);
+		}
 		//end cutom update
 
 	
