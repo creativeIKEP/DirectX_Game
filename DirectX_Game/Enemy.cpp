@@ -35,6 +35,8 @@ VECTOR explosionPos[ENEMY_COUNT];
 int explosionTime[ENEMY_COUNT];
 int clear;
 int deadNum = 0;
+int enemySootSound;
+int enemyDeathSound;
 
 
 bool EnemyInit();
@@ -72,6 +74,9 @@ bool EnemyInit() {
 
 	explosinoEffect = LoadGraph("explosion.png");
 	clear = LoadGraph("clear.png");
+	enemySootSound = LoadSoundMem("Audio\\enemyShot.mp3");
+	enemyDeathSound = LoadSoundMem("Audio\\explosion.mp3");
+	ChangeVolumeSoundMem(255 * 200 / 100, enemyDeathSound);
 
 	return true;
 }
@@ -106,6 +111,7 @@ void EnemyUpdate() {
 						ShootEffectSet(VAdd(enemyPos[i], VScale(direction, 200)));
 						HitCheck(enemyPos[i], VNorm(direction));
 						ShootEffect();
+						if (CheckSoundMem(enemySootSound) == 0)PlaySoundMem(enemySootSound, DX_PLAYTYPE_BACK);
 					}
 					else if ((GetNowCount() - preAttackTime[i]) >= 1000 * (3 + 3)) {
 						MV1SetRotationMatrix(enemyes[i], matrix);
@@ -148,6 +154,7 @@ void EnemyUpdate() {
 						ShootEffectSet(VAdd(enemyPos[i], VScale(direction, 80)));
 						HitCheck(enemyPos[i], VNorm(direction));
 						ShootEffect();
+						if (CheckSoundMem(enemySootSound) == 0)PlaySoundMem(enemySootSound, DX_PLAYTYPE_BACK);
 					}
 					else if ((GetNowCount() - preAttackTime[i]) >= 1000 * (3 + 3)) {
 						MV1SetRotationMatrix(enemyes[i], matrix);
@@ -217,6 +224,7 @@ void SetDead(int index) {
 	if(isAlive[index])deadNum++;
 	if (deadNum > ENEMY_COUNT)deadNum = ENEMY_COUNT;
 	isAlive[index] = false;
+	if (CheckSoundMem(enemyDeathSound) == 0)PlaySoundMem(enemyDeathSound, DX_PLAYTYPE_BACK);
 }
 
 void EnemyCheckCollision(int index) {

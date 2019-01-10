@@ -15,6 +15,7 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 	int time;
 	std::string message = "今からそう遠くない未来2XXX年…\n\nこの世界は、AIによって支配された暗黒時代…\n\nAIは人間を危険な存在と判断し、捕獲・処刑していた…\n\n私はかろうじて逃げてきたが、すべてのAIロボットを倒さないとこの世界は平和にならない…\n\n銃を使ってすべてのAIロボットを倒し、この世界を変えなければならない…      ↓";
 	int messageCount = 0;
+	int bgm;
 
 	ChangeWindowMode(TRUE);
 	SetGraphMode(1200, 800, 32);
@@ -31,6 +32,8 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 	if (!EnemyInit())return -1;
 
 	ShootEffectInit();
+
+	bgm = LoadSoundMem("Audio\\bgm.mp3");
 	//end custom initialize
 	
 
@@ -40,6 +43,7 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 
 		//write cutom update from here
 		if (isStart == 2) {
+			if(CheckSoundMem(bgm) == 0)PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 			StageDraw();
 			InputCheck();
 			SetCamera();
@@ -82,7 +86,7 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC) {
 				int xpos, ypos;
 				GetMousePoint(&xpos, &ypos);
 				if (windowWidth / 2 - 30 <= xpos && xpos <= windowWidth / 2 - 30 + 140 && windowHeight - 80 <= ypos && ypos <= windowHeight - 80 + 50) {
-					isStart = 1;
+					isStart = 2;
 					time = GetNowCount();
 				}
 			}

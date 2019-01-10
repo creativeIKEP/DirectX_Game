@@ -10,6 +10,7 @@ int preHitTime = 0;
 int heart;
 int gameover;
 int damage;
+int playerShootSound;
 
 void PlayerInit();
 void PlayerUpdate();
@@ -20,6 +21,7 @@ void PlayerInit() {
 	heart = LoadGraph("heart.png");
 	gameover = LoadGraph("gameover.png");
 	damage = LoadGraph("damage.png");
+	playerShootSound = LoadSoundMem("Audio\\playerShot.mp3");
 }
 
 void PlayerUpdate() {
@@ -65,7 +67,7 @@ void PlayerShoot() {
 		}
 	}
 
-
+	PlaySoundMem(playerShootSound, DX_PLAYTYPE_BACK);
 }
 
 void PlayerLIfeDown() {
